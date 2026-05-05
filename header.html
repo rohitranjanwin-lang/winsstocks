@@ -1,0 +1,133 @@
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  .money-icon {
+    color: #00ffab;
+    margin-right: 10px;
+    font-size: 2rem;
+  }
+
+  .logo-text {
+    font-size: 2rem;
+  }
+
+  .logo-text a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .logo-text a:hover {
+    color: #00ffab;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 30px;
+  }
+
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: #00ffab;
+  }
+
+  .clock {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .nav-links {
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .clock {
+      margin-top: 10px;
+    }
+
+</style>
+
+<header>
+  <div class="header-left">
+    <span class="money-icon">💰</span>
+    <h1 class="logo-text" style="font-size: 2rem; margin: 0;">
+      <a href="index.html" aria-label="WinsStocks - SIP and ETF Tools">WinsStocks</a>
+    </h1>
+
+  </div>
+
+  <nav class="nav-links">
+    <a href="index.html#calculator">SIP Calculator</a>
+    <a href="etf.html">ETFs</a>
+    <a href="global.html">Global Markets</a>
+     <a href="blog.html">Blogs</a>
+  </nav>
+
+  <div class="clock" id="clock">
+    <div id="user-time">--:--:--</div>
+    <div id="user-timezone" style="font-size: 0.8em; color: #ccc; margin-top: 2px;">Loading timezone...</div>
+  </div>
+</header>
+
+<script>
+function startUserClock() {
+  // Detect user's timezone
+  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  function updateUserClock() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-US', {
+      timeZone: userTimezone,
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+
+    document.getElementById('user-time').textContent = timeString;
+    document.getElementById('user-timezone').textContent = userTimezone.replace('_', ' ');
+  }
+
+  updateUserClock();
+  setInterval(updateUserClock, 1000);
+}
+
+// Start clock when header loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startUserClock);
+} else {
+  startUserClock();
+}
+</script>
